@@ -19,12 +19,3 @@ def load_and_split_data(test_size=0.2, random_state=42):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
 
     return X_train, X_test, y_train, y_test, iris.feature_names, iris.target_names
-
-
-if __name__ == '__main__':
-    X_train, X_test, y_train, y_test, feature_names, target_names = load_and_split_data()
-    
-    print('\nРазмер обучающей выборки X:', X_train.shape)
-    print('Размер тестовой выборки X:', X_test.shape)
-    print('Названия признаков:', feature_names)
-    print('Названия классов:', target_names)
