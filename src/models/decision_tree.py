@@ -3,6 +3,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn import tree
 import graphviz
 
+
 class DecisionTreeClassifierModel:
     '''
     Класс для обучения и оценки модели Decision Tree.
@@ -28,7 +29,8 @@ class DecisionTreeClassifierModel:
             random_state=random_state
         )
         self.feature_names = None  #  Имена признаков для визуализации дерева
-        self.target_names = None # Имена классов для визуализации дерева
+        self.target_names = None  # Имена классов для визуализации дерева
+
 
     def fit(self, X_train, y_train, feature_names=None, target_names=None):
         '''
@@ -44,6 +46,7 @@ class DecisionTreeClassifierModel:
         self.feature_names = feature_names
         self.target_names = target_names
 
+
     def predict(self, X_test):
         '''
         Прогнозирует метки классов для новых данных.
@@ -55,6 +58,7 @@ class DecisionTreeClassifierModel:
             numpy.ndarray: Прогнозируемые метки классов.
         '''
         return self.model.predict(X_test)
+
 
     def evaluate(self, X_test, y_test):
         '''
@@ -72,9 +76,11 @@ class DecisionTreeClassifierModel:
         precision = precision_score(y_test, y_pred, average='weighted')
         recall = recall_score(y_test, y_pred, average='weighted')
         f1 = f1_score(y_test, y_pred, average='weighted')
+        
         return {'accuracy': accuracy, 'precision': precision, 'recall': recall, 'f1': f1}
 
-    def visualize_tree(self, filename='decision_tree.dot'):
+
+    def visualize_tree(self, filename=r'report\graphics\decision_tree.dot'):
         '''
         Визуализирует дерево решений и сохраняет его в файл .dot.
 
@@ -96,17 +102,5 @@ class DecisionTreeClassifierModel:
         )
         graph = graphviz.Source(dot_data)
         graph.render(filename, view=False, format='png', cleanup=True)
-        print(f'Дерево решений визуализировано и сохранено в файл {filename}.png')
-
-
-if __name__ == '__main__':
-    from src.utils.data_loader import load_and_split_data
-    X_train, X_test, y_train, y_test, feature_names, target_names = load_and_split_data()
-
-    dt_model = DecisionTreeClassifierModel(max_depth=3)
-    dt_model.fit(X_train, y_train, feature_names=feature_names, target_names=target_names)
-
-    metrics = dt_model.evaluate(X_test, y_test)
-    print('Метрики Decision Tree:', metrics)
-
-    dt_model.visualize_tree()
+        
+        print(f'\nДерево решений визуализировано и сохранено в файл {filename}.png')

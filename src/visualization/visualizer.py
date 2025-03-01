@@ -1,13 +1,11 @@
 import matplotlib.pyplot as plt
-import seaborn as sns
-import pandas as pd
+
 
 class Visualizer:
     '''
     Класс для создания визуализаций.
     '''
-
-    def plot_model_comparison(self, model_metrics, filename='model_comparison.png'):
+    def plot_model_comparison(self, model_metrics, filename='report\graphics\model_comparison.png'):
         '''
         Создает столбчатую диаграмму для сравнения метрик разных моделей.
 
@@ -24,7 +22,7 @@ class Visualizer:
         x = range(len(model_names))
         width = 0.2
 
-        plt.figure(figsize=(12, 8))
+        plt.figure(figsize=(12, 8), num='График сравнения моделей')
         plt.bar(x, accuracy_scores, width=width, label='Accuracy')
         plt.bar([i + width for i in x], precision_scores, width=width, label='Precision')
         plt.bar([i + 2 * width for i in x], recall_scores, width=width, label='Recall')
@@ -37,15 +35,5 @@ class Visualizer:
         plt.tight_layout()
         plt.savefig(filename)
         plt.show()
+        
         print(f'График сравнения моделей сохранен в файл {filename}')
-
-if __name__ == '__main__':
-    # Пример использования
-    model_metrics = {
-        'Decision Tree': {'accuracy': 0.95, 'precision': 0.96, 'recall': 0.94, 'f1': 0.95},
-        'Random Forest': {'accuracy': 0.97, 'precision': 0.98, 'recall': 0.96, 'f1': 0.97},
-        'KNN': {'accuracy': 0.94, 'precision': 0.95, 'recall': 0.93, 'f1': 0.94}
-    }
-
-    visualizer = Visualizer()
-    visualizer.plot_model_comparison(model_metrics)

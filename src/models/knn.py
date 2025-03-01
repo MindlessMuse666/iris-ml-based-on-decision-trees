@@ -1,6 +1,7 @@
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
+
 class KNNClassifierModel:
     '''
     Класс для обучения и оценки модели K-Nearest Neighbors.
@@ -14,6 +15,7 @@ class KNNClassifierModel:
         '''
         self.model = KNeighborsClassifier(n_neighbors=n_neighbors)
 
+
     def fit(self, X_train, y_train):
         '''
         Обучает модель KNN.
@@ -23,6 +25,7 @@ class KNNClassifierModel:
             y_train: Метки классов для обучающих данных.
         '''
         self.model.fit(X_train, y_train)
+
 
     def predict(self, X_test):
         '''
@@ -35,6 +38,7 @@ class KNNClassifierModel:
             numpy.ndarray: Прогнозируемые метки классов.
         '''
         return self.model.predict(X_test)
+
 
     def evaluate(self, X_test, y_test):
         '''
@@ -52,14 +56,5 @@ class KNNClassifierModel:
         precision = precision_score(y_test, y_pred, average='weighted')
         recall = recall_score(y_test, y_pred, average='weighted')
         f1 = f1_score(y_test, y_pred, average='weighted')
+        
         return {'accuracy': accuracy, 'precision': precision, 'recall': recall, 'f1': f1}
-
-if __name__ == '__main__':
-    from src.utils.data_loader import load_and_split_data
-    X_train, X_test, y_train, y_test, _, _ = load_and_split_data()
-
-    knn_model = KNNClassifierModel(n_neighbors=5)
-    knn_model.fit(X_train, y_train)
-
-    metrics = knn_model.evaluate(X_test, y_test)
-    print('Метрики KNN:', metrics)

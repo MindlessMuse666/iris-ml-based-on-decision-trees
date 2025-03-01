@@ -24,7 +24,7 @@ def load_and_split_data(test_size=0.2, random_state=42):
 if __name__ == '__main__':
     X_train, X_test, y_train, y_test, feature_names, target_names = load_and_split_data()
     
-    print('Размер обучающей выборки X:', X_train.shape)
+    print('\nРазмер обучающей выборки X:', X_train.shape)
     print('Размер тестовой выборки X:', X_test.shape)
     print('Названия признаков:', feature_names)
     print('Названия классов:', target_names)

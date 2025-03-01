@@ -4,6 +4,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+
 class RandomForestClassifierModel:
     '''
     Класс для обучения и оценки модели Random Forest.
@@ -30,7 +31,8 @@ class RandomForestClassifierModel:
             max_features=max_features,
             random_state=random_state
         )
-        self.feature_names = None  #  Имена признаков для визуализации важности признаков
+        self.feature_names = None  # Имена признаков для визуализации важности признаков
+
 
     def fit(self, X_train, y_train, feature_names=None):
         '''
@@ -44,6 +46,7 @@ class RandomForestClassifierModel:
         self.model.fit(X_train, y_train)
         self.feature_names = feature_names
 
+
     def predict(self, X_test):
         '''
         Прогнозирует метки классов для новых данных.
@@ -55,6 +58,7 @@ class RandomForestClassifierModel:
             numpy.ndarray: Прогнозируемые метки классов.
         '''
         return self.model.predict(X_test)
+
 
     def evaluate(self, X_test, y_test):
         '''
@@ -72,9 +76,11 @@ class RandomForestClassifierModel:
         precision = precision_score(y_test, y_pred, average='weighted')
         recall = recall_score(y_test, y_pred, average='weighted')
         f1 = f1_score(y_test, y_pred, average='weighted')
+        
         return {'accuracy': accuracy, 'precision': precision, 'recall': recall, 'f1': f1}
 
-    def plot_feature_importance(self, filename='feature_importance.png'):
+
+    def plot_feature_importance(self, filename=r'report\graphics\feature_importance.png'):
         '''
         Визуализирует важность признаков.
 
@@ -89,7 +95,7 @@ class RandomForestClassifierModel:
         feature_importance_df = pd.DataFrame({'feature': self.feature_names, 'importance': feature_importance})
         feature_importance_df = feature_importance_df.sort_values('importance', ascending=False)
 
-        plt.figure(figsize=(10, 6))
+        plt.figure(figsize=(10, 6), num='Важность признаков в модели Random Forest')
         sns.barplot(x='importance', y='feature', hue='feature', data=feature_importance_df, palette='viridis', legend=False)
         plt.title('Важность признаков в модели Random Forest')
         plt.xlabel('Важность')
@@ -97,18 +103,5 @@ class RandomForestClassifierModel:
         plt.tight_layout()
         plt.savefig(filename)
         plt.show()
-        print(f'График важности признаков сохранен в файл {filename}')
-
-
-if __name__ == '__main__':
-    from src.utils.data_loader import load_and_split_data
-
-    X_train, X_test, y_train, y_test, feature_names, _ = load_and_split_data()
-
-    rf_model = RandomForestClassifierModel(n_estimators=150, max_depth=5)
-    rf_model.fit(X_train, y_train, feature_names=feature_names)
-
-    metrics = rf_model.evaluate(X_test, y_test)
-    print('Метрики Random Forest:', metrics)
-
-    rf_model.plot_feature_importance()
+        
+        print(f'\nГрафик важности признаков сохранен в файл {filename}')
